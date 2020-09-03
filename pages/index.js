@@ -1,65 +1,72 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React from "react";
+import { arrayOf, shape } from "prop-types";
+import Head from "next/head";
+import Link from "next/link";
+import {
+  Container, Row, Col, Card, CardBody,
+  CardTitle, CardText, CardImg, Button
+} from "reactstrap";
+import HOC from "../hoc/HOC";
+import actions from "../actions/test";
+import selectors from "../selectors/test";
 
-export default function Home() {
+function Home(props) {
+  const { repos } = props;
+
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+          <title>Create Next App</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+      <Container className="mt-5 mb-5">
+        <Row>
+          {repos && repos.map((repo) => (
+            <Col sm="4" className="mb-4" key={repo.id}>
+              <Card>
+                <CardBody>
+                  <CardImg top src={repo.owner.avatar_url} />
+                  <CardTitle className="mt-2">{repo.name}</CardTitle>
+                  <CardText>{repo.language}</CardText>
+                  <Link href="/repo/[pid]" as={`/repo/${repo.id}`}>
+                    <a>
+                      <Button>Ver repositorio</Button>
+                    </a>
+                  </Link>
+                </CardBody>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </>
   )
 }
+
+Home.defaultProps = {
+  repos: [],
+};
+
+Home.propTypes = {
+  repos: arrayOf(shape()),
+};
+
+const mapStateToProps = (state) => ({
+  repos: selectors(state).test.repos,
+});
+
+/*
+const mapDispatchToProps = dispatch => ({
+  onRequestRepos() {
+    dispatch({
+      type: actions.REQUEST_REPOS,
+      payload: { username: "dnm95" },
+    });
+  },
+});
+*/
+
+export default HOC(mapStateToProps)(Home, {
+  type: actions.REQUEST_REPOS,
+  payload: { username: "dnm95" },
+});
