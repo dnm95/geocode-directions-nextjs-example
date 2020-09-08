@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import makeStore from "../store";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 
 class CustomApp extends App {
   render() {

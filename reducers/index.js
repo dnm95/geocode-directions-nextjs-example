@@ -1,6 +1,6 @@
 import { combineReducers } from "redux-immutable";
-import test from "./test";
+import directions from "./directions";
 
 export default combineReducers({
-  test,
+  directions,
 });

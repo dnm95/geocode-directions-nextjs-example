@@ -1,8 +1,8 @@
 import { all, fork } from "redux-saga/effects";
-import test from "./test";
+import directions from "./directions";
 
 export default function* mainSagas() {
   yield all([
-    fork(test),
+    fork(directions),
   ]);
 }

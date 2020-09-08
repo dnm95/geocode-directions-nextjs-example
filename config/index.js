@@ -1,5 +1,5 @@
 const config = {};
 
-config.API_URI = "https://api.github.com/users";
+config.GOOGLE_MAPS_KEY = "";
 
 export default config;
