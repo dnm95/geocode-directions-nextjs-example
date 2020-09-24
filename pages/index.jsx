@@ -12,7 +12,7 @@ import RouteForm from "components/forms/Route";
 import MapWithDirections from "components/commons/MapWithDirections";
 import RouteList from "components/commons/RouteList";
 import SortBy from "components/commons/SortBy";
-import { Divider, OverflowCol, Logo } from "components/styles";
+import { Divider, OverflowCol } from "components/styles";
 
 function Home(props) {
   const {
@@ -24,13 +24,11 @@ function Home(props) {
   return (
     <>
       <Head>
-          <title>Urbvan Transit</title>
-          <link rel="icon" href="https://cdn.urbvan.com/favicon.ico" />
+          <title>Geocode Directions google maps example</title>
         </Head>
       <Container className="mt-4 mb-4">
         <Row>
           <Col sm="4">
-            <Logo src="https://cdn.urbvan.com/website1.0/menu/logo.svg" alt="Urbvan" />
             <RouteForm
               origin={directions.origin}
               destination={directions.destination}
